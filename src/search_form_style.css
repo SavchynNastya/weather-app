@@ -1,0 +1,22 @@
+form input {
+  border: 1px solid grey;
+  border-radius: 8px;
+  background: #e4f1fe;
+}
+
+.form {
+  margin-bottom: 10px;
+  position: relative;
+  top: 20px;
+  left: 10px;
+}
+
+#current-location {
+  position: relative;
+  left: 200px;
+  bottom: 18px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  background: #e4f1fe;
+  color: grey;
+}
