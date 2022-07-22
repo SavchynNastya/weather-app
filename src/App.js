@@ -1,11 +1,11 @@
 import React from "react";
 //import PlaceSearch from "./Place_search";
-import NowWeekDayCards from "./Weekday_cards";
+import WeekDayCards from "./MainWeatherApp";
 
 export default function WeatherApp() {
   return (
     <div className="weather-app container">
-      <NowWeekDayCards />
+      <WeekDayCards />
       <p>
         {" "}
         <a

@@ -63,24 +63,18 @@ h4 {
   font-style: oblique;
 }
 
-.link_celsius:hover {
+/* .link_celsius:hover {
   cursor: pointer;
 }
 
 .link_fahren:hover {
   cursor: pointer;
-}
+} */
 
-.link_celsius {
-  font-size: 15px;
-  color: #729eca;
-  text-decoration: underline;
-}
-
+.link_celsius,
 .link_fahren {
   font-size: 15px;
-  color: #729eca;
-  text-decoration: underline;
+  /*color: #729eca;*/
 }
 
 .col {
