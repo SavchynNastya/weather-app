@@ -4,8 +4,10 @@ import WeekDayCards from "./MainWeatherApp";
 
 export default function WeatherApp() {
   return (
-    <div className="weather-app container">
-      <WeekDayCards />
+    <div>
+      <div className="weather-app container">
+        <WeekDayCards />
+      </div>
       <p>
         {" "}
         <a

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import WeatherCard from "./WeatherCard";
 import WeatherIcon from "./WeatherIcon";
 import "./index.css";
 import "./search_form_style.css";
@@ -18,8 +19,9 @@ export default function WeekDayCards() {
   const [unit, setUnit] = useState("celsius");
 
   const [weatherData, setWeatherData] = useState({});
-  const [icons, setIcons] = useState({});
-  const [weeklyTemp, setWeeklyTemp] = useState({});
+  const [icons, setIcons] = useState([]);
+  const [weekDay, setWeekDay] = useState([]);
+  const [weeklyTemp, setWeeklyTemp] = useState([]);
 
   function displayByCity(response) {
     /*
@@ -33,39 +35,46 @@ export default function WeekDayCards() {
       sun: `http://openweathermap.org/img/wn/${response.data.list[39].weather[0].icon}@2x.png`,
     });
     */
-    setIcons({
-      mon: response.data.list[0].weather[0].icon,
-      tues: response.data.list[6].weather[0].icon,
-      wed: response.data.list[13].weather[0].icon,
-      thur: response.data.list[20].weather[0].icon,
-      fri: response.data.list[28].weather[0].icon,
-      sat: response.data.list[32].weather[0].icon,
-      sun: response.data.list[39].weather[0].icon,
-    });
-    setWeeklyTemp({
-      mon: Math.round(response.data.list[0].main.temp),
-      tues: Math.round(response.data.list[6].main.temp),
-      wed: Math.round(response.data.list[13].main.temp),
-      thur: Math.round(response.data.list[20].main.temp),
-      fri: Math.round(response.data.list[28].main.temp),
-      sat: Math.round(response.data.list[32].main.temp),
-      sun: Math.round(response.data.list[39].main.temp),
-    });
+    setIcons([
+      response.data.list[0].weather[0].icon,
+      response.data.list[7].weather[0].icon,
+      response.data.list[15].weather[0].icon,
+      response.data.list[23].weather[0].icon,
+      response.data.list[31].weather[0].icon,
+    ]);
+    console.log(response);
+    setWeeklyTemp([
+      Math.round(response.data.list[0].main.temp),
+      Math.round(response.data.list[7].main.temp),
+      Math.round(response.data.list[15].main.temp),
+      Math.round(response.data.list[23].main.temp),
+      Math.round(response.data.list[31].main.temp),
+    ]);
+    setWeekDay([
+      response.data.list[0].dt,
+      response.data.list[7].dt,
+      response.data.list[15].dt,
+      response.data.list[23].dt,
+      response.data.list[31].dt,
+    ]);
+  }
+
+  function convert(day) {
+    let date = new Date(day * 1000);
+    return daysOfWeek[date.getDay()];
   }
 
   function displayCels(event) {
     event.preventDefault();
     if (unit === "fahrenheit") {
       weatherData.temp = Math.round(convertToCels(weatherData.temp));
-      setWeeklyTemp({
-        mon: Math.round(convertToCels(weeklyTemp.mon)),
-        tues: Math.round(convertToCels(weeklyTemp.tues)),
-        wed: Math.round(convertToCels(weeklyTemp.wed)),
-        thur: Math.round(convertToCels(weeklyTemp.thur)),
-        fri: Math.round(convertToCels(weeklyTemp.fri)),
-        sat: Math.round(convertToCels(weeklyTemp.sat)),
-        sun: Math.round(convertToCels(weeklyTemp.sun)),
-      });
+      setWeeklyTemp([
+        Math.round(convertToCels(weeklyTemp[0])),
+        Math.round(convertToCels(weeklyTemp[1])),
+        Math.round(convertToCels(weeklyTemp[2])),
+        Math.round(convertToCels(weeklyTemp[3])),
+        Math.round(convertToCels(weeklyTemp[4])),
+      ]);
       setUnit("celsius");
     }
   }
@@ -82,15 +91,13 @@ export default function WeekDayCards() {
     event.preventDefault();
     if (unit === "celsius") {
       weatherData.temp = Math.round(convertToFahr(weatherData.temp));
-      setWeeklyTemp({
-        mon: Math.round(convertToFahr(weeklyTemp.mon)),
-        tues: Math.round(convertToFahr(weeklyTemp.tues)),
-        wed: Math.round(convertToFahr(weeklyTemp.wed)),
-        thur: Math.round(convertToFahr(weeklyTemp.thur)),
-        fri: Math.round(convertToFahr(weeklyTemp.fri)),
-        sat: Math.round(convertToFahr(weeklyTemp.sat)),
-        sun: Math.round(convertToFahr(weeklyTemp.sun)),
-      });
+      setWeeklyTemp([
+        Math.round(convertToFahr(weeklyTemp[0])),
+        Math.round(convertToFahr(weeklyTemp[1])),
+        Math.round(convertToFahr(weeklyTemp[2])),
+        Math.round(convertToFahr(weeklyTemp[3])),
+        Math.round(convertToFahr(weeklyTemp[4])),
+      ]);
       setUnit("fahrenheit");
     } else return;
   }
@@ -128,24 +135,29 @@ export default function WeekDayCards() {
       sun: `http://openweathermap.org/img/wn/${response.data.daily[0].weather[0].icon}@2x.png`,
     });
     */
-    setIcons({
-      mon: response.data.daily[1].weather[0].icon,
-      tues: response.data.daily[2].weather[0].icon,
-      wed: response.data.daily[3].weather[0].icon,
-      thur: response.data.daily[4].weather[0].icon,
-      fri: response.data.daily[5].weather[0].icon,
-      sat: response.data.daily[6].weather[0].icon,
-      sun: response.data.daily[0].weather[0].icon,
-    });
-    setWeeklyTemp({
-      mon: Math.round(response.data.daily[1].temp.day),
-      tues: Math.round(response.data.daily[2].temp.day),
-      wed: Math.round(response.data.daily[3].temp.day),
-      thur: Math.round(response.data.daily[4].temp.day),
-      fri: Math.round(response.data.daily[5].temp.day),
-      sat: Math.round(response.data.daily[6].temp.day),
-      sun: Math.round(response.data.daily[0].temp.day),
-    });
+    setIcons([
+      response.data.daily[0].weather[0].icon,
+      response.data.daily[1].weather[0].icon,
+      response.data.daily[2].weather[0].icon,
+      response.data.daily[3].weather[0].icon,
+      response.data.daily[4].weather[0].icon,
+    ]);
+    console.log(response);
+    setWeeklyTemp([
+      Math.round(response.data.daily[0].temp.day),
+      Math.round(response.data.daily[1].temp.day),
+      Math.round(response.data.daily[2].temp.day),
+      Math.round(response.data.daily[3].temp.day),
+      Math.round(response.data.daily[4].temp.day),
+    ]);
+    //response.data.daily[0].dt
+    setWeekDay([
+      response.data.daily[0].dt,
+      response.data.daily[1].dt,
+      response.data.daily[2].dt,
+      response.data.daily[3].dt,
+      response.data.daily[4].dt,
+    ]);
   }
 
   function showByPosition(position) {
@@ -215,154 +227,35 @@ export default function WeekDayCards() {
         </span>
 
         <div className="row">
-          <div className="col">
-            <div className="Mon">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Mon</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.mon} />
-                    {/* <img id="mon-icon" src={icons.mon} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="monTemp">{weeklyTemp.mon}</span>°
-                    </span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherCard
+            day={convert(weekDay[0])}
+            code={icons[0]}
+            temp={weeklyTemp[0]}
+          />
 
-          <div className="col">
-            <div className="Tues">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Tues</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.tues} />
-                    {/* <img id="tues-icon" src={icons.tues} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="tuesTemp">{weeklyTemp.tues}</span>°
-                    </span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherCard
+            day={convert(weekDay[1])}
+            code={icons[1]}
+            temp={weeklyTemp[1]}
+          />
 
-          <div className="col">
-            <div className="Wed">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Wed</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.wed} />
-                    {/* <img id="wed-icon" src={icons.wed} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="wedTemp">{weeklyTemp.wed}</span>°
-                    </span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherCard
+            day={convert(weekDay[2])}
+            code={icons[2]}
+            temp={weeklyTemp[2]}
+          />
 
-          <div className="col">
-            <div className="Thur">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Thur</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.thur} />
-                    {/* <img id="thur-icon" src={icons.thur} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="thurTemp">{weeklyTemp.thur}</span>°
-                    </span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherCard
+            day={convert(weekDay[3])}
+            code={icons[3]}
+            temp={weeklyTemp[3]}
+          />
 
-          <div className="col">
-            <div className="Fri">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Fri</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.fri} />
-                    {/* <img id="fri-icon" src={icons.fri} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="friTemp">{weeklyTemp.fri}</span>°
-                    </span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col">
-            <div className="Sat">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Sat</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.sat} />
-                    {/* <img id="sat-icon" src={icons.sat} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="satTemp">{weeklyTemp.sat}</span>°
-                    </span>
-                  </h5>
-                  <p className="card-text"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col">
-            <div className="Sun">
-              <div
-                className="card border-secondary mb-3"
-                style={{ maxWidth: "80px" }}
-              >
-                <div className="card-header">Sun</div>
-                <div className="card-body text-secondary">
-                  <h5 className="card-title">
-                    <WeatherIcon code={icons.sun} />
-                    {/* <img id="sun-icon" src={icons.sun} alt="weather-icon" /> */}
-                    <br />
-                    <span className="temp">
-                      <span id="sunTemp">{weeklyTemp.sun}</span>°
-                    </span>
-                  </h5>
-                  <p className="card-text"></p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherCard
+            day={convert(weekDay[4])}
+            code={icons[4]}
+            temp={weeklyTemp[4]}
+          />
         </div>
       </div>
     );

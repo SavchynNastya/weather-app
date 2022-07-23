@@ -14,9 +14,13 @@ export default function WeatherIcon(props) {
     "09d": "305",
     "09n": "305",
     "10d": "300",
+    "10n": "300",
+    "11n": "302",
     "11d": "302",
     "13d": "499",
+    "13n": "499",
     "50d": "509",
+    "50n": "509",
   };
   console.log(props.code);
   return <Icon name={codeMapping[props.code]} type="qweather"></Icon>;

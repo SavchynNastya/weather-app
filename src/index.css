@@ -42,6 +42,8 @@ p {
 }
 
 .row {
+  display: flex;
+  justify-content: center;
   position: relative;
   margin: 5px;
   bottom: 20px;
@@ -78,7 +80,7 @@ h4 {
 }
 
 .col {
-  max-width: 80px;
+  max-width: 130px;
   padding: 1px;
 }
 
@@ -93,7 +95,11 @@ h4 {
 }
 
 .container {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  height: auto;
   border: 1px solid grey;
   border-radius: 20px;
   padding-bottom: 0px;
