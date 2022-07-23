@@ -42,7 +42,6 @@ export default function WeekDayCards() {
       response.data.list[23].weather[0].icon,
       response.data.list[31].weather[0].icon,
     ]);
-    console.log(response);
     setWeeklyTemp([
       Math.round(response.data.list[0].main.temp),
       Math.round(response.data.list[7].main.temp),
@@ -142,7 +141,6 @@ export default function WeekDayCards() {
       response.data.daily[3].weather[0].icon,
       response.data.daily[4].weather[0].icon,
     ]);
-    console.log(response);
     setWeeklyTemp([
       Math.round(response.data.daily[0].temp.day),
       Math.round(response.data.daily[1].temp.day),
