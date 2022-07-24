@@ -11,7 +11,7 @@ export default function WeekDayCards() {
 
   let daysOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"];
   let [date, setDate] = useState(new Date());
-  let [time, setTime] = useState(new Date());
+  //let [time, setTime] = useState(new Date());
 
   const [loaded, setLoaded] = useState(false);
   let [city, setCity] = useState("Paris");
@@ -106,11 +106,12 @@ export default function WeekDayCards() {
       temp: Math.round(response.data.main.temp),
       wind: Math.round(response.data.wind.speed),
       humidity: Math.round(response.data.main.humidity),
+      time: `${new Date().getHours()}:${new Date().getMinutes()}`,
       //icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       icon: response.data.weather[0].icon,
       city: response.data.name,
     });
-    setTime(`${time.getHours()}:${time.getMinutes()}`);
+    // weatherData.time = `${time.getHours()}:${time.getMinutes()}`;
     setDate(daysOfWeek[date.getDay()]);
     setLoaded(true);
   }
@@ -201,7 +202,7 @@ export default function WeekDayCards() {
         <h1>{weatherData.city}</h1>
         <h4>
           <span id="week-Day">{date}</span>
-          <span id="time"> {time} </span>
+          <span id="time"> {weatherData.time} </span>
           <br />
           humidity: <span id="humidity">{weatherData.humidity}</span>
           %<br />
