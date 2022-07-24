@@ -13,6 +13,7 @@ export default function WeatherApp() {
         <a
           href="https://github.com/SavchynNastya/SheCodesPlus-project"
           target="_blanc"
+          rel="noopener referrer"
         >
           Open-source code
         </a>{" "}
