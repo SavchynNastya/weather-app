@@ -216,11 +216,11 @@ export default function WeekDayCards() {
         </span>
         <span className="now_temp">
           <span id="now-value"> {weatherData.temp} </span>
-          <a href="#" className="link_celsius" onClick={displayCels}>
+          <a href="/" className="link_celsius" onClick={displayCels}>
             ℃
           </a>{" "}
           |{" "}
-          <a href="#" className="link_fahren" onClick={displayFahr}>
+          <a href="/" className="link_fahren" onClick={displayFahr}>
             ℉
           </a>
         </span>
